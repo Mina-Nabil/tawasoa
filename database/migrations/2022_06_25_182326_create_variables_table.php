@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('variables', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('unit');
+            $table->string('initial')->unique();
+            $table->timestamps();
         });
     }
 

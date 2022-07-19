@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -110,4 +111,9 @@ class User extends Authenticatable
     }
 
     ////relations
+        //////relations
+        public function entries():HasMany
+        {
+            return $this->hasMany(Entry::class);
+        }
 }

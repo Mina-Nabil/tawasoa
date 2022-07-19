@@ -89,6 +89,8 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('entries/main')}}">Main</a></li>
                                 <li><a href="{{url('entries/history')}}">History</a></li>
+                                <li><a href="{{url('rawdata/main')}}">Main Rawdata</a></li>
+                                <li><a href="{{url('rawdata/history')}}">Rawdata History</a></li>
                             </ul>
                         </li>
 
@@ -97,7 +99,7 @@
 
                         <li> <a class="waves-effect waves-dark" href="{{url('variables')}}" aria-expanded="false"><i class="fas fa-calendar-alt"></i>Variables</a>
                         </li>
-                
+
                         <li> <a class="waves-effect waves-dark" href="{{url('users')}}" aria-expanded="false"><i class="icon-people"></i>Users</a>
                         </li>
                         @endif
@@ -118,7 +120,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <!-- text-->
-                                <a href="{{route('logout')}}"><i class="fa fa-power-off"></i>Logout</a>
+                                <a href="{{route('logout')}}"><i class="fa fa-power-off"></i> Logout</a>
                                 <!-- text-->
                             </ul>
                         </li>
@@ -187,7 +189,31 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <x-entry-form></x-entry-form>
+                                <form action="{{$postEntryUrl}}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Company Name*</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Company Title" name=companyName required>
+                                        </div>
+                                        <small class="text-danger">{{$errors->first('companyName')}}</small>
+
+                                    </div>
+
+                                    @foreach ($variables as $var)
+                                    <div class="form-group">
+                                        <label>{{$var->title}}</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" step=0.0000001 class="form-control" placeholder="Amount" name='var[{{$var->id}}]' required>
+                                        </div>
+                                    </div>
+                                    @endforeach
+
+
+
+
+                                    <button type="submit" class="btn btn-success mr-2">Add</button>
+                                </form>
                             </div>
                         </div>
                     </div>

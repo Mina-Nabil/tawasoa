@@ -13,9 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('equations');
+
         Schema::create('equations', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->string("expression");
+            $table->string("initials_expression");
             $table->timestamps();
+        });
+
+        Schema::create('equation_map', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId("equation_id")->constrained('equations');
+            $table->double("lower_limit")->nullable();
+            $table->double("higher_limit")->nullable();
+            $table->double("result");
         });
     }
 
@@ -26,6 +39,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('equation_map');
         Schema::dropIfExists('equations');
     }
 };
